@@ -15,24 +15,39 @@ const EducationSection = () => {
 
   const educationData = [
     {
-      degree: "Secondary School Certificate (SSC)",
-      school: "Natore Textile Institute",
-      mascot: "📘",
-      year: "2019-2021",
-      achievements: ["GPA: 4.89", "Subject: Science"],
-      skills: ["Mathematics", "Physics", "Chemistry", "Biology"],
+      degree: "Bachelor of Science",
+      school: "Ahsanullah University of Science & Technology",
+      mascot: "📗",
+      year: "2023-2026",
+      achievements: ["CGPA: 3.89", "Depertment: CSE"],
+      skills: [
+        "Full-Stack Development",
+        "Data structure",
+        "Algorithm",
+        "Machine Learning",
+      ],
       description:
-        "Focused on core science subjects with emphasis on practical laboratory work and scientific research methodologies.",
+        "Focused on comprehensive software development skills with emphasis on problem-solving, system design, and intelligent computing methodologies.",
     },
     {
       degree: "Higher Secondary Certificate (HSC)",
-      school: "Dottopara Model Degree College",
+      school: "Cumilla Cadet College",
       mascot: "📗",
-      year: "2021-2023",
-      achievements: ["GPA: 4.25", "Subject: Arts"],
-      skills: ["Literature", "Social Studies", "Economics", "History"],
+      year: "2019-2021",
+      achievements: ["GPA: 5.00", "Subject: Science"],
+      skills: ["Mathematics", "ICT", "Physics", "Chemistry", "Biology"],
       description:
-        "Developed strong analytical and critical thinking skills through comprehensive study of humanities and social sciences.",
+        "Developed strong analytical and critical thinking skills through comprehensive study of Science & Information technologies.",
+    },
+    {
+      degree: "Secondary School Certificate (SSC)",
+      school: "Cumilla Cadet College",
+      mascot: "📘",
+      year: "2019",
+      achievements: ["GPA: 5.00", "Subject: Science"],
+      skills: ["Mathematics", "Physics", "Chemistry", "Biology"],
+      description:
+        "Focused on core science subjects with emphasis on practical laboratory work and scientific research methodologies.",
     },
   ];
 

@@ -1,47 +1,61 @@
 import { ReactLenis } from "lenis/react";
 import { useTransform, motion, useScroll } from "framer-motion";
 import { useRef, useState } from "react";
-
+import GiveAHand from "../../assets/images/GiveAHand.png";
+import TalkThread from "../../assets/images/TalkThread.png";
+import HumptyDumpty from "../../assets/images/HumptyDumpty.png";
+import Bhoj from "../../assets/images/Bhoj.png";
+import AustCarnival from "../../assets/images/AustCarnival.png";
 const projects = [
   {
-    title: "Olova! A Lightweight JavaScript Library",
+    title: "Talk Thread — Blog Application",
     description:
-      "A lightweight JavaScript library for creating beautiful, responsive UI components.",
+      "A blogging platform with infinite scrolling,search engine optimization (SEO) to boost visibility and discovery.",
     src: "rock.jpg",
-    link: "https://i.postimg.cc/DwgWTfP0/Annotation-2025-03-19-113338.png",
+    link: TalkThread,
     color: "#5196fd",
-    githubLink: "https://github.com/seraprogrammer/portfolio",
-    liveLink: "https://codervai.vercel.app",
+    githubLink: "https://github.com/AsifAvaas/TalkThreads",
+    liveLink: "https://talk-threads-seven.vercel.app",
   },
   {
-    title: "A sleek portfolio built with React and Tailwind CSS ",
+    title: "Aust CSE Carnival — Event Hosting Platform",
     description:
-      "A sleek portfolio built with React and Tailwind CSS to showcase your skills, projects, and experience in a modern design.",
+      "An interactive website for university-hosted CSE events, including contests, hackathons,and exhibitions.",
     src: "tree.jpg",
-    link: "https://i.postimg.cc/J75CKyrs/Annotation-2025-04-01-203959.png",
-    color: "#8f89ff",
-    githubLink: "https://github.com/seraprogrammer/portfolio",
-    liveLink: "https://codervai.vercel.app",
+    link: AustCarnival,
+    color: "#fff003",
+    githubLink: "https://github.com/AsifAvaas/AustCarnival",
+    liveLink: "https://aust-carnival.vercel.app",
   },
   {
-    title: "🚀 CodeWhisperer",
+    title: "Give A Hand — Assistance & Emergency Response Platform",
     description:
-      "🚀 CodeWhisperer A powerful online code editor built with React and Tailwind CSS. Featuring real-time code execution, syntax highlighting, multi-language support, and a sleek UI. Start coding instantly! 💻✨",
+      "A platform where verified doctors, blood donors, and volunteers assist help seekers throughbookings, chat, and emergency notices.",
     src: "water.jpg",
-    link: "https://i.postimg.cc/J4jPVFY0/Annotation-2025-04-01-204723.png",
+    link: GiveAHand,
     color: "#fff",
-    githubLink: "https://github.com/seraprogrammer/codewhisperer",
-    liveLink: "https://codewhisperer.vercel.app/",
+    githubLink: "https://github.com/AsifAvaas/Giva-A-Hand",
+    liveLink: "https://giva-a-hand-project.vercel.app",
   },
   {
-    title: "CodeKori 🔥",
+    title: "Humpty Dumpty  — 2D Ball Game",
     description:
-      "CodeKori is a powerful online code editor built with React and Tailwind CSS. Featuring real-time code execution, syntax highlighting, multi-language support, and a sleek UI. Start coding instantly! 💻✨",
+      "A 2D game where players control a ball to navigate obstacles, collect stars, and complete levels. Implemented a ranking system based on level completion speed.",
     src: "house.jpg",
-    link: "https://i.postimg.cc/cHQr4fpR/Annotation-2025-04-01-205350.png",
+    link: HumptyDumpty,
     color: "#ed649e",
-    githubLink: "https://github.com/seraprogrammer/CodeKori",
-    liveLink: "https://codekori.js.org",
+    githubLink: "https://github.com/AsifAvaas/Humpty-Dumpty",
+    liveLink: "https://www.youtube.com/watch?v=8THBytkSqf0",
+  },
+  {
+    title: "Bhoj — Food Ordering Platform",
+    description:
+      "A user-friendly app for online food ordering, complete with menu browsing, orderhistory, and reviews.",
+    src: "house.jpg",
+    link: Bhoj,
+    color: "#1ed760",
+    githubLink: "https://github.com/sanjidasunny/VIVISTERIA",
+    liveLink: "https://vivisteria.vercel.app",
   },
 ];
 

@@ -24,45 +24,29 @@ export default function About() {
 
             <div className="relative space-y-4">
               <p className="text-white">
-                Hello! I'm Nazmul Hossain, a passionate JavaScript developer
+                Hello! I'm Asif A Khuda, a passionate Full Stack developer
                 specializing in creating innovative web solutions and
-                user-friendly interfaces.{" "}
-                <span className="font-bold text-white">
-                  As the creator of the OlovaJS UI Framework
-                </span>
-                , I'm dedicated to simplifying development workflows.
-              </p>
-              <p className="text-white">
+                user-friendly interfaces. <br />
                 My focus is on making web development faster, easier, and
-                accessible to all developers. Currently, I'm expanding into
-                backend development to grow as a full-stack developer and create
+                accessible to all developers. Currently, I'm focusing on various
+                backend frameworks to grow as a full-stack developer and create
                 seamless, robust web applications.
               </p>
 
               <div className="pt-6">
                 <blockquote className="border-l-4 border-gray-300 pl-4">
                   <p className="text-white">
-                    I'm a lifelong learner and innovator, driven by a desire to
-                    contribute to the developer community with new ideas and
-                    tools that deliver real value. As the creator of OlovaJS,
-                    I'm pushing the boundaries of JavaScript frameworks to
-                    empower developers worldwide.
+                    I'm a passionate backend developer and lifelong learner,
+                    dedicated to building scalable, secure, and high-performance
+                    systems. I thrive on solving complex problems and
+                    contributing to the developer community with tools and ideas
+                    that create real impact.
                   </p>
 
                   <div className="mt-6 space-y-3">
                     <cite className="block font-medium text-white">
-                      Nazmul Hossain, Creator of
+                      Asif A Khuda
                     </cite>
-                    <div className="flex items-center gap-2">
-                      <img
-                        className="h-5 w-fit"
-                        src={OlovaLogo}
-                        alt="Olova Logo"
-                        height="20"
-                        width="auto"
-                      />
-                      <span className="text-white">OlovaJS</span>
-                    </div>
                   </div>
                 </blockquote>
               </div>
