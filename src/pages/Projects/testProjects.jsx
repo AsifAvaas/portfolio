@@ -6,7 +6,18 @@ import TalkThread from "../../assets/images/TalkThread.png";
 import HumptyDumpty from "../../assets/images/HumptyDumpty.png";
 import Bhoj from "../../assets/images/Bhoj.png";
 import AustCarnival from "../../assets/images/AustCarnival.png";
+import CampusCrew from "../../assets/images/CampusCrew.png";
 const projects = [
+  {
+    title: "CampusCrew - Event Management Website",
+    description:
+      "An event mmanagemet website with AI powered event suggestions, paginations and integrated payment system.",
+    src: "rock.jpg",
+    link: CampusCrew,
+    color: "#ff8000",
+    githubLink: "https://github.com/AsifAvaas/CampusCrew",
+    liveLink: "https://campus-crew.vercel.app",
+  },
   {
     title: "Talk Thread — Blog Application",
     description:
