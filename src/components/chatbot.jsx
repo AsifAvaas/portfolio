@@ -106,7 +106,7 @@ export default function ChatBot() {
                   <RiRobot2Line size={24} className="text-blue-300" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm text-white">Turing 🐾</h3>
+                  <h3 className="font-bold text-sm text-white">Turing</h3>
                   <span className="text-xs text-blue-200 flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                     Online
