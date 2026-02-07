@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { FaRobot, FaPaperPlane, FaTimes } from "react-icons/fa";
+import { RiRobot2Line } from "react-icons/ri";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -10,7 +11,7 @@ export default function ChatBot() {
     {
       role: "assistant",
       content:
-        "Hi! I'm Asif's AI Assistant. Ask me about his **projects**, **skills**, or **experience**!",
+        "Hi! I'm Turing. Asif's AI Assistant. Ask me about his **projects**, **skills**, or **experience**!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -60,17 +61,33 @@ export default function ChatBot() {
       setIsLoading(false);
     }
   };
-
   return (
     <>
-      {/* Floating Action Button */}
+      {/* Custom Keyframes for the Periodic Wiggle */}
+      <style>{`
+        @keyframes wiggle {
+          0%, 85% { transform: rotate(0deg); }
+          87% { transform: rotate(-10deg); }
+          89% { transform: rotate(10deg); }
+          91% { transform: rotate(-10deg); }
+          93% { transform: rotate(10deg); }
+          95% { transform: rotate(-5deg); }
+          97% { transform: rotate(5deg); }
+          100% { transform: rotate(0deg); }
+        }
+      `}</style>
+
+      {/* Floating Action Button with Vibration */}
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 p-4 bg-[rgb(10,35,56)] text-white border border-blue-500/30 rounded-full shadow-[0_0_15px_rgba(10,35,56,0.5)] hover:bg-blue-900 transition-all z-50 ${
+        style={{
+          animation: isOpen ? "none" : "wiggle 4s ease-in-out infinite",
+        }}
+        className={`fixed bottom-6 right-6 p-4 bg-[rgb(16,88,149)] text-white border border-blue-500/30 rounded-full shadow-[0_0_20px_rgba(16,88,149,0.6)] hover:bg-blue-800 transition-all z-50 ${
           isOpen ? "hidden" : "block"
         }`}
       >
-        <FaRobot size={28} />
+        <RiRobot2Line size={32} />
       </button>
 
       {/* Chat Window */}
@@ -86,12 +103,10 @@ export default function ChatBot() {
             <div className="bg-[rgb(10,35,56)] p-4 border-b border-white/10 flex justify-between items-center shadow-md">
               <div className="flex items-center gap-3">
                 <div className="bg-white/10 p-2 rounded-full backdrop-blur-sm">
-                  <FaRobot size={20} className="text-blue-300" />
+                  <RiRobot2Line size={24} className="text-blue-300" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm text-white">
-                    Asif's Assistant
-                  </h3>
+                  <h3 className="font-bold text-sm text-white">Turing 🐾</h3>
                   <span className="text-xs text-blue-200 flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                     Online
@@ -118,8 +133,8 @@ export default function ChatBot() {
                   <div
                     className={`max-w-[85%] p-3.5 rounded-2xl text-sm shadow-sm leading-relaxed ${
                       msg.role === "user"
-                        ? "bg-blue-600 text-white rounded-br-none" // User stays Blue for contrast
-                        : "bg-[rgb(10,35,56)] text-gray-100 border border-white/5 rounded-bl-none" // Bot uses Secondary Color
+                        ? "bg-blue-600 text-white rounded-br-none"
+                        : "bg-[rgb(10,35,56)] text-gray-100 border border-white/5 rounded-bl-none"
                     }`}
                   >
                     <ReactMarkdown
