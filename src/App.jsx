@@ -9,6 +9,7 @@ import Skills from "./pages/Skills/Skills";
 import Education from "./pages/Education/Education";
 
 import { Route, Routes } from "react-router-dom";
+import ChatBot from "./components/chatbot";
 
 export default function App() {
   const [isOnePage, setIsOnePage] = useState(false); // Toggle state
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/projects" element={<Projects />} />
         </Routes>
       )}
+      <ChatBot />
     </>
   );
 }

@@ -9,4 +9,16 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // New Server Configuration
+  server: {
+    port: 5173, // Ensures frontend always runs on this port
+    proxy: {
+      // Any request starting with /api will be sent to the Vercel backend
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 });

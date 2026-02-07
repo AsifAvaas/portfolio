@@ -1,0 +1,38 @@
+[
+  {
+    "id": "bio",
+    "text": "My name is Asif A Khuda. I am a final-year Computer Science and Engineering (CSE) student at Ahsanullah University of Science and Technology with a CGPA of 3.84. I am a Full Stack Developer specializing in the MERN stack, Laravel, and Python FastAPI. I am also a competitive programmer with over 200 problems solved on Codeforces (Max Rating 1122) and 100+ on LeetCode."
+  },
+  {
+    "id": "contact",
+    "text": "You can contact me via email at asif13.aak@gmail.com. My LinkedIn profile is linkedin.com/in/asifavaas and my GitHub is github.com/AsifAvaas. I am based in Dhaka, Bangladesh."
+  },
+  {
+    "id": "skills",
+    "text": "My technical skills include: Languages: JavaScript (ES6+), C++, Python, PHP. Frontend: React, Tailwind CSS, HTML5, CSS3. Backend: Node.js, Express.js, Laravel, Django, FastAPI. Databases: MongoDB, MySQL, PostgreSQL, Firebase. Tools: Git, GitHub, Vercel, Cloudinary, SSLCommerz, bKash API."
+  },
+  {
+    "id": "project-campus-crew",
+    "text": "I developed 'Campus Crew', an intelligent event management application (Oct 2025 - Nov 2025). The tech stack includes React, Node.js, Python (ML), Cloudinary, and the bKash API. Key features include an AI-powered event recommendation system, secure payments via bKash Gateway with QR verification for entry, and a 24/7 support chatbot powered by Hugging Face models."
+  },
+  {
+    "id": "project-give-a-hand",
+    "text": "I architected 'Give A Hand', a disaster response and assistance platform (Feb 2025 - Mar 2025). Built with React, Laravel, MySQL, and Tailwind CSS, it connects donors, doctors, and volunteers. It features a real-time chat system, a secure Role-Based Access Control (RBAC) system for Admins and Helpers, and system-wide notifications for emergency updates."
+  },
+  {
+    "id": "project-talk-thread",
+    "text": "I built 'Talk Thread', a dynamic blog application (Aug 2024 - Sep 2024) using React, Node.js, MongoDB, and Tailwind CSS. It features secure Google OAuth 2.0 authentication, infinite scrolling for performance, and real-time interactivity with nested comments and likes."
+  },
+  {
+    "id": "project-cse-carnival",
+    "text": "I created the 'CSE Carnival' event hosting platform (Jul 2024 - Aug 2024) using the MERN stack (MongoDB, Express, React, Node.js). It manages workflows for contests and hackathons, includes a secure admin panel for instructors, and is deployed on Vercel for high availability."
+  },
+  {
+    "id": "project-thesis",
+    "text": "I am working on a thesis titled 'Mitigating Fraud in Microfinance using Consortium Blockchain'. The research focuses on using Hyperledger Besu to prevent 'double-dipping' and 'elite capture' in the microfinance sector of Bangladesh."
+  },
+  {
+    "id": "achievements",
+    "text": "I was the Champion (1st Place) at the Inter-University Programming Contest (AUST CSE Carnival 2.0) and 1st Runner Up at the Programming Hero Hackathon (AUST CSE Carnival 6.0)."
+  }
+]
