@@ -12,7 +12,7 @@ import { Route, Routes } from "react-router-dom";
 import ChatBot from "./components/chatbot";
 
 export default function App() {
-  const [isOnePage, setIsOnePage] = useState(false); // Toggle state
+  const [isOnePage, setIsOnePage] = useState(true); // Toggle state
 
   return (
     <>
@@ -21,11 +21,22 @@ export default function App() {
       {isOnePage ? (
         // One-Page Mode: Render all components together
         <>
-          <Hero />
-          <Skills />
-          {/* <Experience /> */}
-          <Education />
-          <Contact />
+          <div id="home">
+            <Hero />
+          </div>
+          <div id="Skills">
+            <Skills />
+          </div>
+
+          <div id="Education">
+            <Education />
+          </div>
+          <div id="Projects">
+            <Projects />
+          </div>
+          <div id="Contact">
+            <Contact />
+          </div>
         </>
       ) : (
         // Router Mode: Use routes for navigation
