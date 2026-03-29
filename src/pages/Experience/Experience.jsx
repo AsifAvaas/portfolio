@@ -1,135 +1,677 @@
-import React from "react";
-import { Code2, Activity, Cpu, Layers, Network, Binary } from "lucide-react";
+import React, { useRef, useState } from "react";
+import { ExternalLink, ArrowUpRight } from "lucide-react";
 
-const ExperienceCard = ({
-  title,
-  company,
-  period,
-  description,
-  icon: Icon,
-}) => (
-  <div className="group relative overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
-    {/* Glass morphism effect */}
-    <div className="absolute inset-0 backdrop-blur-lg bg-white/5 rounded-lg" />
+/* ─── Magnetic tilt wrapper ───────────────────────────────── */
+const MagneticCard = ({ children }) => {
+  const ref = useRef(null);
+  const glowRef = useRef(null);
 
-    {/* Animated gradient border */}
-    <div className="absolute -inset-[2px] bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-lg opacity-0 group-hover:opacity-100 animate-gradient-xy transition-all duration-500" />
+  const onMove = (e) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotX = ((y - cy) / cy) * -4;
+    const rotY = ((x - cx) / cx) * 4;
+    el.style.transform = `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(4px)`;
+    if (glowRef.current) {
+      glowRef.current.style.background = `radial-gradient(500px circle at ${x}px ${y}px, rgba(99,210,255,0.07), transparent 60%)`;
+    }
+  };
 
-    <div className="relative bg-gray-900/90 rounded-lg p-8 h-full border border-gray-800/50 shadow-xl backdrop-blur-xl">
-      {/* Floating icon with pulse effect */}
-      <div className="relative mb-6">
-        <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-blue-500 opacity-25 rounded-full blur-xl group-hover:opacity-75 animate-pulse transition-all duration-500" />
-        <Icon className="w-12 h-12 text-cyan-400 relative z-10 transform group-hover:rotate-12 transition-transform duration-300" />
-      </div>
+  const onLeave = () => {
+    if (ref.current)
+      ref.current.style.transform =
+        "perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0)";
+    if (glowRef.current) glowRef.current.style.background = "transparent";
+  };
 
-      {/* Content with improved typography */}
-      <div className="space-y-3">
-        <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-          {title}
-        </h3>
-        <div className="flex justify-between items-center text-gray-300">
-          <span className="font-semibold text-blue-400">{company}</span>
-          <span className="text-sm font-mono bg-blue-500/10 px-3 py-1 rounded-full">
-            {period}
-          </span>
+  return (
+    <div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      style={{
+        transition: "transform 0.18s ease",
+        willChange: "transform",
+        position: "relative",
+      }}
+    >
+      <div
+        ref={glowRef}
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: "none",
+          borderRadius: "inherit",
+          transition: "background 0.1s",
+        }}
+      />
+      {children}
+    </div>
+  );
+};
+
+/* ─── Project card ────────────────────────────────────────── */
+const ProjectCard = ({ project, index }) => {
+  const [hov, setHov] = useState(false);
+
+  const accents = [
+    { rgb: "99,210,255", label: "01" },
+    { rgb: "52,211,153", label: "02" },
+    { rgb: "251,146,60", label: "03" },
+  ];
+  const acc = accents[index % accents.length];
+
+  return (
+    <div
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        position: "relative",
+        borderRadius: "16px",
+        padding: "1px",
+        background: hov
+          ? `linear-gradient(135deg, rgba(${acc.rgb},0.55), rgba(${acc.rgb},0.08) 60%, transparent)`
+          : "linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))",
+        transition: "background 0.35s ease",
+        cursor: "default",
+      }}
+    >
+      <div
+        style={{
+          background: "linear-gradient(145deg,#0c1228,#070d1f)",
+          borderRadius: "15px",
+          padding: "20px 22px",
+          position: "relative",
+          overflow: "hidden",
+          display: "flex",
+          gap: "16px",
+          alignItems: "flex-start",
+        }}
+      >
+        {/* Number tag */}
+        <div
+          style={{
+            flexShrink: 0,
+            width: "32px",
+            height: "32px",
+            borderRadius: "8px",
+            background: `rgba(${acc.rgb},0.1)`,
+            border: `1px solid rgba(${acc.rgb},0.25)`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontFamily: "'Space Mono', monospace",
+            fontSize: "11px",
+            fontWeight: 700,
+            color: `rgb(${acc.rgb})`,
+            marginTop: "2px",
+            boxShadow: hov ? `0 0 12px rgba(${acc.rgb},0.25)` : "none",
+            transition: "box-shadow 0.3s",
+          }}
+        >
+          {acc.label}
         </div>
-        <p className="text-gray-300 border-l-4 border-blue-500/50 pl-4 mt-4 leading-relaxed">
-          {description}
-        </p>
-      </div>
 
-      {/* Decorative elements */}
-      <div className="absolute top-4 right-4 w-20 h-20">
-        <div className="absolute top-0 right-0 w-6 h-[2px] bg-cyan-500/50" />
-        <div className="absolute top-0 right-0 w-[2px] h-6 bg-cyan-500/50" />
-      </div>
-      <div className="absolute bottom-4 left-4 w-20 h-20">
-        <div className="absolute bottom-0 left-0 w-6 h-[2px] bg-purple-500/50" />
-        <div className="absolute bottom-0 left-0 w-[2px] h-6 bg-purple-500/50" />
+        <div style={{ flex: 1 }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              marginBottom: "6px",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontSize: "16px",
+                fontWeight: 700,
+                color: "#e8f0ff",
+              }}
+            >
+              {project.name}
+            </span>
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  color: `rgb(${acc.rgb})`,
+                  opacity: 0.7,
+                  transition: "opacity 0.2s",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.7)}
+              >
+                <ArrowUpRight size={15} />
+              </a>
+            )}
+          </div>
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: "13.5px",
+              color: "#7a8aaa",
+              lineHeight: 1.65,
+              margin: 0,
+            }}
+          >
+            {project.description}
+          </p>
+        </div>
+
+        {/* Bottom accent */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            height: "2px",
+            width: hov ? "100%" : "0%",
+            background: `linear-gradient(90deg, transparent, rgba(${acc.rgb},0.7), transparent)`,
+            transition: "width 0.5s ease",
+          }}
+        />
       </div>
     </div>
-  </div>
-);
+  );
+};
 
+/* ─── Main Section ─────────────────────────────────────────── */
 const ExperienceSection = () => {
-  const experiences = [
-    {
-      icon: Network,
-      title: "WordPress Developer",
-      company: "Fiverr",
-      period: "2019 - 2020",
-      description:
-        "Worked on developing and customizing WordPress websites for clients globally.",
-    },
-    {
-      icon: Layers,
-      title: "Junior Frontend Developer",
-      company: "Sera Programmer",
-      period: "2021 - 2023",
-      description:
-        "Assisted in building and optimizing user interfaces with a focus on responsive and interactive designs.",
-    },
-    {
-      icon: Code2,
-      title: "JavaScript Developer",
-      company: "OlovJS (Sera Programmer)",
-      period: "2023 - Present",
-      description:
-        "Contributed to developing JavaScript libraries and enhancing framework functionalities.",
-    },
-  ];
+  const [cardHov, setCardHov] = useState(false);
+  const arklabLogo = "https://www.arklabai.com/favicon.ico";
+
+  const experience = {
+    title: "Full-Stack Developer Intern",
+    company: "Arklab AI",
+    period: "March 2026 – Present",
+    website: "https://www.arklabai.com",
+    description:
+      "Architecting and deploying full-stack web applications, integrating AI-driven intelligence, and building high-performance financial and commercial platforms.",
+    projects: [
+      {
+        name: "IQONA",
+        description:
+          "Developing the MVP for an AI-powered economic intelligence system tailored for the African market, implementing comprehensive CRUD operations and secure data flows across 5 core modules.",
+      },
+      {
+        name: "Nestguard",
+        link: "https://www.nestguard.co.uk/",
+        description:
+          "Built and integrated a robust customer quoting and order-taking system for a UK premium wall coatings service, streamlining the conversion funnel for end-users.",
+      },
+      {
+        name: "Super Trader",
+        description:
+          "Engineered backend components for a high-speed cryptocurrency arbitrage bot, focusing on ultra-low latency data processing and reliable API integrations.",
+      },
+    ],
+  };
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-b relative overflow-hidden pt-32 pb-20">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-[#04081A]" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossOrigin="anonymous"
+      />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet"
+      />
 
-        {/* Grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(50,50,70,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(50,50,70,0.15)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_70%,transparent_100%)]" />
+      <style>{`
+        @keyframes fadeUp {
+          from { opacity:0; transform:translateY(28px); }
+          to   { opacity:1; transform:translateY(0); }
+        }
+        .exp-animate { animation: fadeUp 0.6s ease both; }
+        .exp-animate-d1 { animation: fadeUp 0.6s 0.1s ease both; }
+        .exp-animate-d2 { animation: fadeUp 0.6s 0.2s ease both; }
+        .exp-animate-d3 { animation: fadeUp 0.6s 0.3s ease both; }
+      `}</style>
 
-        {/* Animated particles */}
-        <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 bg-blue-500/20 rounded-full animate-float"
+      <section
+        style={{
+          minHeight: "100vh",
+          background: "#04081A",
+          position: "relative",
+          overflow: "hidden",
+          padding: "120px 24px 80px",
+        }}
+      >
+        {/* Grid bg */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.028) 1px,transparent 1px),
+            linear-gradient(90deg,rgba(255,255,255,0.028) 1px,transparent 1px)
+          `,
+            backgroundSize: "44px 44px",
+          }}
+        />
+        {/* Ambient glow */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "900px",
+            height: "420px",
+            background:
+              "radial-gradient(ellipse, rgba(6,182,212,0.08) 0%, transparent 65%)",
+            pointerEvents: "none",
+          }}
+        />
+
+        <div
+          style={{
+            maxWidth: "900px",
+            margin: "0 auto",
+            position: "relative",
+            zIndex: 10,
+          }}
+        >
+          {/* ── Section header ── */}
+          <div
+            className="exp-animate"
+            style={{ textAlign: "center", marginBottom: "56px" }}
+          >
+            <p
               style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "11px",
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                color: "rgba(99,210,255,0.6)",
+                marginBottom: "12px",
+              }}
+            >
+              Career
+            </p>
+            <h2
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontSize: "clamp(36px, 6vw, 60px)",
+                fontWeight: 800,
+                lineHeight: 1.05,
+                background:
+                  "linear-gradient(135deg, #e8f4ff 0%, #63d2ff 45%, #a78bfa 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                margin: 0,
+              }}
+            >
+              Professional Experience
+            </h2>
+            <div
+              style={{
+                width: "48px",
+                height: "3px",
+                background: "linear-gradient(90deg,#63d2ff,#a78bfa)",
+                borderRadius: "99px",
+                margin: "16px auto 0",
               }}
             />
-          ))}
-        </div>
+          </div>
 
-        {/* Content container */}
-        <div className="relative container mx-auto px-6 mt-10">
-          {/* Section header with enhanced effects */}
-          <div className="flex flex-col items-center space-y-8 mb-20">
-            <div className="relative">
-              <h2 className="text-5xl md:text-7xl font-black text-transparent bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-center">
-                Professional Journey
-              </h2>
-              <div className="absolute inset-0 -z-10 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-3xl rounded-full" />
+          {/* ── Main card ── */}
+          <MagneticCard>
+            <div
+              onMouseEnter={() => setCardHov(true)}
+              onMouseLeave={() => setCardHov(false)}
+              className="exp-animate-d1"
+              style={{
+                position: "relative",
+                borderRadius: "24px",
+                padding: "1px",
+                background: cardHov
+                  ? "linear-gradient(135deg, rgba(99,210,255,0.45) 0%, rgba(167,139,250,0.2) 50%, transparent 100%)"
+                  : "linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))",
+                transition: "background 0.4s ease",
+              }}
+            >
+              <div
+                style={{
+                  background:
+                    "linear-gradient(160deg, #0b1126 0%, #060c1d 100%)",
+                  borderRadius: "23px",
+                  overflow: "hidden",
+                  position: "relative",
+                }}
+              >
+                {/* Top shimmer bar */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "15%",
+                    right: "15%",
+                    height: "1px",
+                    background:
+                      "linear-gradient(90deg, transparent, rgba(99,210,255,0.6), rgba(167,139,250,0.6), transparent)",
+                    opacity: cardHov ? 1 : 0.4,
+                    transition: "opacity 0.4s, left 0.4s, right 0.4s",
+                    ...(cardHov ? { left: "2%", right: "2%" } : {}),
+                  }}
+                />
+
+                {/* Corner glow blobs */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "-60px",
+                    right: "-60px",
+                    width: "200px",
+                    height: "200px",
+                    background:
+                      "radial-gradient(circle, rgba(99,210,255,0.06), transparent 65%)",
+                    pointerEvents: "none",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "-60px",
+                    left: "-40px",
+                    width: "180px",
+                    height: "180px",
+                    background:
+                      "radial-gradient(circle, rgba(167,139,250,0.06), transparent 65%)",
+                    pointerEvents: "none",
+                  }}
+                />
+
+                {/* ── Top header band ── */}
+                <div
+                  style={{
+                    padding: "32px 36px 28px",
+                    borderBottom: "1px solid rgba(255,255,255,0.05)",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                    gap: "20px",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  {/* Logo + company */}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "18px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        borderRadius: "16px",
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        boxShadow: cardHov
+                          ? "0 0 20px rgba(99,210,255,0.15)"
+                          : "none",
+                        transition: "box-shadow 0.4s, transform 0.3s",
+                        transform: cardHov ? "scale(1.06)" : "scale(1)",
+                        padding: "8px",
+                      }}
+                    >
+                      <img
+                        src={arklabLogo}
+                        alt="Arklab AI"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "contain",
+                          borderRadius: "8px",
+                        }}
+                        onError={(e) => {
+                          e.target.src =
+                            "https://ui-avatars.com/api/?name=Arklab+AI&background=0D8ABC&color=fff";
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <p
+                        style={{
+                          fontFamily: "'Space Mono', monospace",
+                          fontSize: "10px",
+                          letterSpacing: "0.16em",
+                          textTransform: "uppercase",
+                          color: "rgba(99,210,255,0.55)",
+                          margin: "0 0 4px",
+                        }}
+                      >
+                        Company
+                      </p>
+                      <h3
+                        style={{
+                          fontFamily: "'Syne', sans-serif",
+                          fontSize: "26px",
+                          fontWeight: 800,
+                          color: "#e8f0ff",
+                          margin: 0,
+                          lineHeight: 1.1,
+                        }}
+                      >
+                        {experience.company}
+                      </h3>
+                      <a
+                        href={experience.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "4px",
+                          fontFamily: "'Space Mono', monospace",
+                          fontSize: "11px",
+                          color: "rgba(99,210,255,0.65)",
+                          textDecoration: "none",
+                          marginTop: "4px",
+                          transition: "color 0.2s",
+                        }}
+                        onMouseEnter={(e) =>
+                          (e.currentTarget.style.color = "rgb(99,210,255)")
+                        }
+                        onMouseLeave={(e) =>
+                          (e.currentTarget.style.color =
+                            "rgba(99,210,255,0.65)")
+                        }
+                      >
+                        arklabai.com <ExternalLink size={11} />
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Role + period badges */}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "8px",
+                      alignItems: "flex-end",
+                    }}
+                  >
+                    <div
+                      style={{
+                        padding: "6px 14px",
+                        borderRadius: "99px",
+                        background: "rgba(99,210,255,0.08)",
+                        border: "1px solid rgba(99,210,255,0.18)",
+                        fontFamily: "'Syne', sans-serif",
+                        fontSize: "13px",
+                        fontWeight: 700,
+                        color: "#c8e8ff",
+                      }}
+                    >
+                      {experience.title}
+                    </div>
+                    <div
+                      style={{
+                        padding: "5px 14px",
+                        borderRadius: "99px",
+                        background: "rgba(167,139,250,0.07)",
+                        border: "1px solid rgba(167,139,250,0.18)",
+                        fontFamily: "'Space Mono', monospace",
+                        fontSize: "11px",
+                        color: "rgba(200,180,255,0.75)",
+                        letterSpacing: "0.04em",
+                      }}
+                    >
+                      {experience.period}
+                    </div>
+                  </div>
+                </div>
+
+                {/* ── Body ── */}
+                <div
+                  style={{
+                    padding: "32px 36px 36px",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "36px",
+                  }}
+                >
+                  {/* Left: description */}
+                  <div style={{ flex: "1 1 220px" }}>
+                    <p
+                      style={{
+                        fontFamily: "'Space Mono', monospace",
+                        fontSize: "9.5px",
+                        letterSpacing: "0.18em",
+                        textTransform: "uppercase",
+                        color: "rgba(255,255,255,0.25)",
+                        marginBottom: "12px",
+                      }}
+                    >
+                      Overview
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "14.5px",
+                        color: "#6a7d9f",
+                        lineHeight: 1.75,
+                        margin: 0,
+                      }}
+                    >
+                      {experience.description}
+                    </p>
+
+                    {/* Stat pills */}
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "10px",
+                        marginTop: "24px",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      {[
+                        { value: "3", label: "Projects" },
+                        { value: "AI", label: "Powered" },
+                        { value: "Full", label: "Stack" },
+                      ].map((s, i) => (
+                        <div
+                          key={i}
+                          style={{
+                            padding: "8px 14px",
+                            borderRadius: "10px",
+                            background: "rgba(255,255,255,0.03)",
+                            border: "1px solid rgba(255,255,255,0.06)",
+                            textAlign: "center",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontFamily: "'Syne', sans-serif",
+                              fontSize: "16px",
+                              fontWeight: 800,
+                              color: "#63d2ff",
+                            }}
+                          >
+                            {s.value}
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: "'Space Mono', monospace",
+                              fontSize: "9px",
+                              color: "rgba(255,255,255,0.3)",
+                              textTransform: "uppercase",
+                              letterSpacing: "0.1em",
+                            }}
+                          >
+                            {s.label}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Vertical divider */}
+                  <div
+                    style={{
+                      width: "1px",
+                      background:
+                        "linear-gradient(to bottom, transparent, rgba(255,255,255,0.07), transparent)",
+                      flexShrink: 0,
+                      alignSelf: "stretch",
+                    }}
+                  />
+
+                  {/* Right: projects */}
+                  <div style={{ flex: "2 1 320px" }}>
+                    <p
+                      style={{
+                        fontFamily: "'Space Mono', monospace",
+                        fontSize: "9.5px",
+                        letterSpacing: "0.18em",
+                        textTransform: "uppercase",
+                        color: "rgba(255,255,255,0.25)",
+                        marginBottom: "16px",
+                      }}
+                    >
+                      Key Projects
+                    </p>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+                      }}
+                    >
+                      {experience.projects.map((project, i) => (
+                        <ProjectCard key={i} project={project} index={i} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p className="text-lg md:text-xl text-gray-400 font-medium tracking-wide text-center max-w-2xl">
-              "Transforming ideas into digital reality, one project at a time"
-            </p>
-          </div>
-
-          {/* Experience grid with improved layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
-            {experiences.map((exp, index) => (
-              <ExperienceCard key={index} {...exp} />
-            ))}
-          </div>
+          </MagneticCard>
         </div>
-
-        {/* Enhanced background effects */}
-        <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/10 rounded-full filter blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/10 rounded-full filter blur-3xl animate-pulse delay-1000" />
-      </div>
+      </section>
     </>
   );
 };

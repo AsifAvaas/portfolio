@@ -30,12 +30,12 @@ export default function Header() {
       targetId: "Education",
     },
 
-    // {
-    //   id: "experience",
-    //   icon: FaBriefcase,
-    //   text: "Experience",
-    //   path: "/experience",
-    // },
+    {
+      id: "experience",
+      icon: FaBriefcase,
+      text: "Experience",
+      targetId: "Experience",
+    },
     {
       id: "projects",
       icon: FaLaptopCode,

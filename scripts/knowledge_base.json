@@ -1,7 +1,11 @@
 [
   {
     "id": "bio",
-    "text": "My name is Asif A Khuda. I am a final-year Computer Science and Engineering (CSE) student at Ahsanullah University of Science and Technology with a CGPA of 3.84. I am a Full Stack Developer specializing in the MERN stack, Laravel, and Python FastAPI. I am also a competitive programmer with over 200 problems solved on Codeforces (Max Rating 1122) and 100+ on LeetCode."
+    "text": "My name is Asif A Khuda. I am a final-year Computer Science and Engineering (CSE) student at Ahsanullah University of Science and Technology (CGPA: 3.89). I am a passionate Full-Stack Developer and competitive programmer. I specialize in the MERN stack, Laravel, and Python, with a strong, growing focus on integrating Artificial Intelligence (NLP/ML) and Blockchain technologies into web applications."
+  },
+  {
+    "id": "education",
+    "text": "I am pursuing my B.Sc. in CSE at Ahsanullah University of Science & Technology (2023-2026). Previously, I completed both my Higher Secondary Certificate (HSC, 2019-2021) and Secondary School Certificate (SSC, 2019) at Cumilla Cadet College, achieving a GPA of 5.00 in the Science discipline."
   },
   {
     "id": "contact",
@@ -9,30 +13,78 @@
   },
   {
     "id": "skills",
-    "text": "My technical skills include: Languages: JavaScript (ES6+), C++, Python, PHP. Frontend: React, Tailwind CSS, HTML5, CSS3. Backend: Node.js, Express.js, Laravel, Django, FastAPI. Databases: MongoDB, MySQL, PostgreSQL, Firebase. Tools: Git, GitHub, Vercel, Cloudinary, SSLCommerz, bKash API."
+    "text": "My technical skills are extensive. Languages: JavaScript, TypeScript, C++, Python, PHP, Dart. Frontend: React, Next.js, Tailwind CSS, Flutter. Backend: Node.js, Express.js, Laravel, Django, FastAPI. Databases: MongoDB, MySQL, PostgreSQL, Firebase. Cloud & DevOps: AWS, Docker, Kubernetes, CI/CD, Git, Linux. Tools: Vercel, Vite, Webpack, Redux."
+  },
+  {
+    "id": "experience-arklab",
+    "text": "I am currently working as a Full-Stack Developer Intern at Arklab AI (March 2026 - Present). My core contributions include developing the MVP for IQONA (an AI-powered economic intelligence system for the African market), building a robust customer quoting and order system for Nestguard (UK premium wall coatings), and engineering backend components for Super Trader, a high-speed cryptocurrency arbitrage bot."
+  },
+  {
+    "id": "project-turing-chatbot",
+    "text": "I created 'Turing', an AI-powered portfolio assistant (which is what you are talking to right now!). It is built using Hugging Face's Qwen model, Retrieval-Augmented Generation (RAG), and vector embeddings to answer questions accurately about my professional background in real-time."
   },
   {
     "id": "project-campus-crew",
-    "text": "I developed 'Campus Crew', an intelligent event management application (Oct 2025 - Nov 2025). The tech stack includes React, Node.js, Python (ML), Cloudinary, and the bKash API. Key features include an AI-powered event recommendation system, secure payments via bKash Gateway with QR verification for entry, and a 24/7 support chatbot powered by Hugging Face models."
+    "text": "I developed 'Campus Crew', an intelligent event management application. The tech stack includes React, Node.js, Python (ML), Cloudinary, and the bKash API. Key features include an AI-powered event recommendation system, secure payments via bKash Gateway with QR verification for entry."
   },
   {
     "id": "project-give-a-hand",
-    "text": "I architected 'Give A Hand', a disaster response and assistance platform (Feb 2025 - Mar 2025). Built with React, Laravel, MySQL, and Tailwind CSS, it connects donors, doctors, and volunteers. It features a real-time chat system, a secure Role-Based Access Control (RBAC) system for Admins and Helpers, and system-wide notifications for emergency updates."
+    "text": "I architected 'Give A Hand', a disaster response and assistance platform. Built with React, Laravel, MySQL, and Tailwind CSS, it connects donors, doctors, and volunteers. It features a real-time chat system, a secure Role-Based Access Control (RBAC) system, and system-wide emergency notifications."
   },
   {
     "id": "project-talk-thread",
-    "text": "I built 'Talk Thread', a dynamic blog application (Aug 2024 - Sep 2024) using React, Node.js, MongoDB, and Tailwind CSS. It features secure Google OAuth 2.0 authentication, infinite scrolling for performance, and real-time interactivity with nested comments and likes."
+    "text": "I built 'Talk Thread', a dynamic blog application using Next.js, Node.js, MongoDB, and Tailwind CSS. It features secure Google OAuth 2.0 authentication, infinite scrolling for performance, and extensive SEO optimization to boost visibility."
   },
   {
     "id": "project-cse-carnival",
-    "text": "I created the 'CSE Carnival' event hosting platform (Jul 2024 - Aug 2024) using the MERN stack (MongoDB, Express, React, Node.js). It manages workflows for contests and hackathons, includes a secure admin panel for instructors, and is deployed on Vercel for high availability."
+    "text": "I created the 'CSE Carnival' event hosting platform using the MERN stack. It manages workflows for university contests and hackathons, includes a secure admin panel for instructors, and is deployed on Vercel for high availability."
+  },
+  {
+    "id": "project-edubridge-ai",
+    "text": "I proposed and designed a hackathon project called 'EduBridge AI' (Oct 2025), an inclusive web platform tailored specifically for students with disabilities to enhance their learning experience."
+  },
+  {
+    "id": "project-humpty-dumpty",
+    "text": "I developed 'Humpty Dumpty', a 2D ball game featuring physics-based obstacle navigation, star collection, and a competitive leaderboard system based on level completion speed."
+  },
+  {
+    "id": "project-bhoj",
+    "text": "I built 'Bhoj', a full-stack online food ordering application featuring intuitive menu browsing, order history tracking, and customer reviews using React, Express, and MongoDB."
   },
   {
     "id": "project-thesis",
-    "text": "I am working on a thesis titled 'Mitigating Fraud in Microfinance using Consortium Blockchain'. The research focuses on using Hyperledger Besu to prevent 'double-dipping' and 'elite capture' in the microfinance sector of Bangladesh."
+    "text": "I am working on my final year thesis titled 'Mitigating Fraud in Microfinance using Consortium Blockchain' alongside two teammates. Our research focuses on utilizing Hyperledger Besu to prevent 'double-dipping' and 'elite capture' in the microfinance sector of Bangladesh."
   },
   {
     "id": "achievements",
-    "text": "I was the Champion (1st Place) at the Inter-University Programming Contest (AUST CSE Carnival 2.0) and 1st Runner Up at the Programming Hero Hackathon (AUST CSE Carnival 6.0)."
+    "text": "I am a competitive programmer with over 200 problems solved on Codeforces and 100+ on LeetCode. I was the Champion (1st Place) at the Inter-University Programming Contest (AUST CSE Carnival 2.0) and 1st Runner Up at the Programming Hero Hackathon (AUST CSE Carnival 6.0)."
+  },
+  {
+    "id": "soft-skills-work-style",
+    "text": "I am a highly adaptable developer who thrives in agile environments. I prioritize pixel-perfect UI design on the frontend and scalable, secure architecture on the backend. I enjoy collaborative problem-solving and am always eager to learn new technologies."
+  },
+  {
+    "id": "career-goals",
+    "text": "My career goal is to transition into a full-time Software Engineer or Full-Stack Developer role where I can build scalable systems. I am particularly interested in roles that allow me to leverage my skills in Artificial Intelligence, NLP, and Web Development."
+  },
+  {
+    "id": "availability-location",
+    "text": "I am graduating in 2026 and am currently open to full-time remote opportunities, as well as on-site roles in Dhaka. I am also open to discussing relocation for the right opportunity."
+  },
+  {
+    "id": "language-proficiency",
+    "text": "I am fluent in English and Bengali, allowing me to effectively communicate with international clients and cross-functional teams."
+  },
+  {
+    "id": "tech-stack-philosophy",
+    "text": "I prefer the MERN stack and Next.js for their vibrant ecosystems and component-driven architecture, which allows me to build fast, scalable, and highly interactive user interfaces."
+  },
+  {
+    "id": "problem-solving-approach",
+    "text": "When faced with a tough bug, my approach is to isolate the issue, check the logs, and break the problem down into smaller testable parts. I heavily rely on official documentation, and I'm not afraid to ask senior team members for perspective when I'm stuck."
+  },
+  {
+    "id": "hobbies-interests",
+    "text": "Outside of coding and competitive programming, I enjoy reading tech blogs, exploring new AI tools, and participating in hackathons to continuously challenge myself."
   }
 ]

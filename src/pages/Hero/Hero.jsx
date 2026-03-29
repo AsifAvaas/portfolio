@@ -44,7 +44,7 @@ export default function Hero() {
   const words = [
     "Full-Stack Developer & UI/UX Enthusiast",
     "JavaScript & MERN Stack Developer",
-    "Learning React Native",
+    "Flutter Enthusiast",
     "Django & Laravel Developer",
   ];
 
@@ -53,19 +53,19 @@ const profile = {
     name: 'Asif A Khuda',
     title: 'Full-Stack Developer | Competitive Programmer | Problem Solver',
     skills: [
-        'React', 'Django', 'Laravel',  'Express', 'NodeJs', 
-        'MySQL', 'MongoDB', 'Docker', 'Redux'
+        'React', 'NextJS', 'Django', 'Laravel', 'Express', 'NodeJs', 'PostgreSQL', 
+        'MySQL', 'MongoDB', 'Docker', 'Redux' , 'sslcommerz'
     ],
     hardWorker: true,
     quickLearner: true,
     problemSolver: true,
-    yearsOfExperience: 2, 
+    yearsOfExperience: 1, 
     hireable: function() {
         return (
             this.hardWorker &&
             this.problemSolver &&
             this.skills.length >= 5 &&
-            this.yearsOfExperience >= 2
+            this.yearsOfExperience >= 1
         );
     }
 };
@@ -158,8 +158,8 @@ const profile = {
               {/* Description */}
               <div className="relative mb-8 sm:mb-12 max-w-xl">
                 <p className="text-base sm:text-xl text-gray-300/90 leading-relaxed">
-                  JavaScript developer 🚀 | Competitive Programmer | Crafting
-                  frameworks and coding the future 💻✨
+                  JavaScript developer | Competitive Programmer | Crafting
+                  frameworks and coding the future
                 </p>
               </div>
 

@@ -104,71 +104,85 @@ const EducationSection = () => {
           animate="visible"
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
-          {educationData.map((edu, index) => (
-            <motion.div
-              key={index}
-              variants={cardVariants}
-              className={`relative border rounded-xl p-8 transition-all duration-300 bg-gray-900/50 backdrop-blur-sm ${
-                hoveredIndex === index
-                  ? "border-teal-500 scale-[1.02]"
-                  : "border-blue-400/20"
-              }`}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3">
-                    <span className="text-3xl">{edu.mascot}</span>
-                    <h3 className="text-2xl font-bold text-white">
-                      {edu.degree}
-                    </h3>
+          {educationData.map((edu, index) => {
+            // Check if this is the last item AND the total number of items is odd
+            const isLastOddItem =
+              educationData.length % 2 !== 0 &&
+              index === educationData.length - 1;
+
+            return (
+              <motion.div
+                key={index}
+                variants={cardVariants}
+                className={`relative border rounded-xl p-8 transition-all duration-300 bg-gray-900/50 backdrop-blur-sm
+                  ${
+                    hoveredIndex === index
+                      ? "border-teal-500 scale-[1.02]"
+                      : "border-blue-400/20"
+                  }
+                  ${
+                    isLastOddItem
+                      ? "md:col-span-2 md:w-[calc(50%-1rem)] md:mx-auto w-full"
+                      : ""
+                  }
+                `}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <span className="text-3xl">{edu.mascot}</span>
+                      <h3 className="text-2xl font-bold text-white">
+                        {edu.degree}
+                      </h3>
+                    </div>
+                    <p className="text-lg text-gray-300 flex items-center gap-2">
+                      <BookOpen className="w-5 h-5 text-teal-500" />
+                      {edu.school}
+                    </p>
+                    <p className="text-gray-400 flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      {edu.year}
+                    </p>
                   </div>
-                  <p className="text-lg text-gray-300 flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-teal-500" />
-                    {edu.school}
-                  </p>
-                  <p className="text-gray-400 flex items-center gap-2">
-                    <Calendar className="w-4 h-4" />
-                    {edu.year}
-                  </p>
-                </div>
 
-                <p className="text-gray-300 text-sm italic border-l-2 border-teal-500 pl-3">
-                  {edu.description}
-                </p>
+                  <p className="text-gray-300 text-sm italic border-l-2 border-teal-500 pl-3">
+                    {edu.description}
+                  </p>
 
-                <div className="space-y-3">
-                  <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                    <Trophy className="w-4 h-4 text-yellow-500" />
-                    Key Achievements
-                  </h4>
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-semibold text-white flex items-center gap-2">
+                      <Trophy className="w-4 h-4 text-yellow-500" />
+                      Key Achievements
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {edu.achievements.map((achievement, i) => (
+                        <div
+                          key={i}
+                          className="px-3 py-1 rounded-full bg-teal-500/10 text-teal-400 flex items-center gap-2 text-sm"
+                        >
+                          <Award className="w-4 h-4" />
+                          <span>{achievement}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
                   <div className="flex flex-wrap gap-2">
-                    {edu.achievements.map((achievement, i) => (
-                      <div
+                    {edu.skills.map((skill, i) => (
+                      <span
                         key={i}
-                        className="px-3 py-1 rounded-full bg-teal-500/10 text-teal-400 flex items-center gap-2 text-sm"
+                        className="px-2 py-1 text-xs rounded bg-blue-500/10 text-blue-300"
                       >
-                        <Award className="w-4 h-4" />
-                        <span>{achievement}</span>
-                      </div>
+                        {skill}
+                      </span>
                     ))}
                   </div>
                 </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {edu.skills.map((skill, i) => (
-                    <span
-                      key={i}
-                      className="px-2 py-1 text-xs rounded bg-blue-500/10 text-blue-300"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

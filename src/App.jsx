@@ -31,6 +31,9 @@ export default function App() {
           <div id="Education">
             <Education />
           </div>
+          <div id="Experience">
+            <Experience />
+          </div>
           <div id="Projects">
             <Projects />
           </div>

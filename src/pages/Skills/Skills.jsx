@@ -1,8 +1,6 @@
-import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import IconCloudDemo from "@/components/globe";
-import { Code2, Paintbrush, Database, Layout, Cpu, Cloud } from "lucide-react";
+import React, { useRef, useEffect, useState } from "react";
+import { Code2, Database, Cloud, Cpu } from "lucide-react";
+import IconCloudDemo from "@/components/globe"; // <-- Make sure this path matches your project structure
 import {
   FaReact,
   FaNodeJs,
@@ -36,244 +34,470 @@ import {
 } from "react-icons/si";
 import { TbBrandVscode } from "react-icons/tb";
 import { BsFileEarmarkCode, BsGrid1X2 } from "react-icons/bs";
-import { MdAnimation } from "react-icons/md";
 import { FcWorkflow } from "react-icons/fc";
 
-const SkillCard = ({ icon: Icon, title, skills, color }) => (
-  <Card className="group relative overflow-hidden bg-gray-900/80 border-gray-700 hover:scale-[1.02] transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20">
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(100,100,255,0.1)] to-transparent group-hover:via-[rgba(100,100,255,0.2)] animate-shimmer"></div>
-    <CardContent className="p-6 relative z-10">
-      <div className="flex items-center gap-4 mb-6">
-        <div
-          className={`p-3 rounded-xl bg-gray-800/50 ${color} group-hover:scale-110 transition-transform duration-300`}
-        >
-          <Icon className="w-8 h-8" />
-        </div>
-        <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-          {title}
-        </h3>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {skills.map((skill, index) => (
-          <Badge
-            key={index}
-            variant="outline"
-            className="group/badge relative bg-gray-800/50 hover:bg-gray-700/80 text-gray-100 border-gray-600 flex items-center gap-2 py-2 px-3 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20"
-          >
-            <span className="transform group-hover/badge:scale-110 transition-transform duration-300">
-              {skill.icon}
-            </span>
-            <span className="font-medium">{skill.name}</span>
-          </Badge>
-        ))}
-      </div>
-    </CardContent>
-  </Card>
-);
+/* ─── Tilt + glow-follow card ─────────────────────────────── */
+const MagneticCard = ({ children, accentRgb }) => {
+  const ref = useRef(null);
+  const glowRef = useRef(null);
 
+  const onMove = (e) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotX = ((y - cy) / cy) * -6;
+    const rotY = ((x - cx) / cx) * 6;
+    el.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(6px)`;
+    if (glowRef.current) {
+      glowRef.current.style.background = `radial-gradient(260px circle at ${x}px ${y}px, rgba(${accentRgb},0.13), transparent 70%)`;
+    }
+  };
+
+  const onLeave = () => {
+    if (ref.current)
+      ref.current.style.transform =
+        "perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)";
+    if (glowRef.current) glowRef.current.style.background = "transparent";
+  };
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      style={{
+        transition: "transform 0.15s ease, box-shadow 0.3s ease",
+        willChange: "transform",
+      }}
+    >
+      <div
+        ref={glowRef}
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: "none",
+          borderRadius: "inherit",
+        }}
+      />
+      {children}
+    </div>
+  );
+};
+
+/* ─── Skill Card ───────────────────────────────────────────── */
+const SkillCard = ({ icon: Icon, title, skills, theme, index }) => {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <MagneticCard accentRgb={theme.accentRgb}>
+      <div
+        className="skill-card"
+        style={{
+          height: "100%", // <-- Add this to make the gradient border stretch
+          position: "relative",
+          borderRadius: "20px",
+          padding: "1px" /* gradient border trick */,
+          background: hovered
+            ? `linear-gradient(135deg, rgba(${theme.accentRgb},0.5) 0%, rgba(${theme.accentRgb},0.08) 50%, transparent 100%)`
+            : "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%)",
+          transition: "background 0.4s ease",
+          animationDelay: `${index * 0.1}s`,
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        {/* Inner card */}
+        <div
+          style={{
+            background: "linear-gradient(145deg, #0c1228 0%, #070d1f 100%)",
+            borderRadius: "19px",
+            padding: "28px",
+            position: "relative",
+            overflow: "hidden",
+            height: "100%",
+            zIndex: 2,
+            display: "flex", // <-- Add this
+            flexDirection: "column", // <-- Add this
+          }}
+        >
+          {/* Ghost index number */}
+          <span
+            style={{
+              position: "absolute",
+              right: "-8px",
+              top: "-18px",
+              fontSize: "120px",
+              fontFamily: "'Space Mono', monospace",
+              fontWeight: 700,
+              color: `rgba(${theme.accentRgb},0.04)`,
+              lineHeight: 1,
+              userSelect: "none",
+              pointerEvents: "none",
+              transition: "color 0.4s",
+            }}
+          >
+            {String(index + 1).padStart(2, "0")}
+          </span>
+
+          {/* Top accent bar */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: "20%",
+              right: "20%",
+              height: "2px",
+              background: `linear-gradient(90deg, transparent, rgba(${theme.accentRgb},0.8), transparent)`,
+              opacity: hovered ? 1 : 0.3,
+              transition: "opacity 0.4s, left 0.4s, right 0.4s",
+              ...(hovered ? { left: "5%", right: "5%" } : {}),
+            }}
+          />
+
+          {/* Corner decoration */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              width: "80px",
+              height: "80px",
+              background: `radial-gradient(circle at bottom right, rgba(${theme.accentRgb},0.12), transparent 70%)`,
+              borderRadius: "0 0 19px 0",
+            }}
+          />
+
+          {/* Header */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "14px",
+              marginBottom: "22px",
+            }}
+          >
+            <div
+              style={{
+                width: "48px",
+                height: "48px",
+                borderRadius: "14px",
+                background: `rgba(${theme.accentRgb},0.1)`,
+                border: `1px solid rgba(${theme.accentRgb},0.2)`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                boxShadow: hovered
+                  ? `0 0 18px rgba(${theme.accentRgb},0.25)`
+                  : "none",
+                transform: hovered ? "scale(1.1)" : "scale(1)",
+              }}
+            >
+              <Icon
+                style={{
+                  width: 22,
+                  height: 22,
+                  color: `rgb(${theme.accentRgb})`,
+                }}
+              />
+            </div>
+
+            <div>
+              <p
+                style={{
+                  fontSize: "10px",
+                  fontFamily: "'Space Mono', monospace",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  color: `rgba(${theme.accentRgb},0.7)`,
+                  marginBottom: "2px",
+                }}
+              >
+                {theme.label}
+              </p>
+              <h3
+                style={{
+                  fontSize: "20px",
+                  fontFamily: "'Syne', sans-serif",
+                  fontWeight: 700,
+                  color: "#f0f4ff",
+                  lineHeight: 1.1,
+                }}
+              >
+                {title}
+              </h3>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div
+            style={{
+              height: "1px",
+              background: `linear-gradient(90deg, rgba(${theme.accentRgb},0.3), rgba(255,255,255,0.04) 60%, transparent)`,
+              marginBottom: "20px",
+            }}
+          />
+
+          {/* Skills grid */}
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "8px",
+              marginTop: "auto",
+            }}
+          >
+            {skills.map((skill, i) => (
+              <div
+                key={i}
+                className="skill-badge"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "7px",
+                  padding: "6px 12px",
+                  borderRadius: "8px",
+                  background: `rgba(${theme.accentRgb},0.05)`,
+                  border: `1px solid rgba(${theme.accentRgb},0.12)`,
+                  fontSize: "12px",
+                  fontFamily: "'Space Mono', monospace",
+                  color: "#b0bcd4",
+                  cursor: "default",
+                  transition: "all 0.22s ease",
+                  animationDelay: `${index * 0.1 + i * 0.04}s`,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = `rgba(${theme.accentRgb},0.14)`;
+                  e.currentTarget.style.borderColor = `rgba(${theme.accentRgb},0.35)`;
+                  e.currentTarget.style.color = "#e8eeff";
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = `rgba(${theme.accentRgb},0.05)`;
+                  e.currentTarget.style.borderColor = `rgba(${theme.accentRgb},0.12)`;
+                  e.currentTarget.style.color = "#b0bcd4";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: "15px",
+                  }}
+                >
+                  {skill.icon}
+                </span>
+                {skill.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </MagneticCard>
+  );
+};
+
+/* ─── Main Section ─────────────────────────────────────────── */
 const SkillsSection = () => {
   const skillCategories = [
     {
       icon: Code2,
-      title: "Frontend Development",
-      color: "text-blue-400",
+      title: "Frontend",
+      theme: {
+        accentRgb: "99,210,255",
+        label: "Interface",
+      },
       skills: [
-        { name: "React", icon: <FaReact className="w-4 h-4 text-[#61DAFB]" /> },
-        {
-          name: "Bootstrap",
-          icon: <SiBootstrap className="w-4 h-4 text-white" />,
-        },
+        { name: "React", icon: <FaReact style={{ color: "#61DAFB" }} /> },
+        { name: "Next.js", icon: <SiNextdotjs style={{ color: "#fff" }} /> },
         {
           name: "JavaScript",
-          icon: <SiJavascript className="w-4 h-4 text-[#f0db4e]" />,
+          icon: <SiJavascript style={{ color: "#f0db4e" }} />,
         },
         {
-          name: "Flutter",
-          icon: <SiFlutter className="w-4 h-4 text-[#1572B6]" />,
+          name: "Tailwind",
+          icon: <SiTailwindcss style={{ color: "#38B2AC" }} />,
         },
+        { name: "Flutter", icon: <SiFlutter style={{ color: "#54C5F8" }} /> },
         {
-          name: "Tailwind CSS",
-          icon: <SiTailwindcss className="w-4 h-4 text-[#38B2AC]" />,
-        },
-        {
-          name: "HTML5",
-          icon: <BsFileEarmarkCode className="w-4 h-4 text-[#E34F26]" />,
-        },
-        {
-          name: "CSS3",
-          icon: <BsFileEarmarkCode className="w-4 h-4 text-[#1572B6]" />,
+          name: "HTML5/CSS3",
+          icon: <BsFileEarmarkCode style={{ color: "#E34F26" }} />,
         },
       ],
     },
     {
       icon: Database,
-      title: "Backend Development",
-      color: "text-green-400",
+      title: "Backend",
+      theme: {
+        accentRgb: "52,211,153",
+        label: "Server-side",
+      },
       skills: [
-        {
-          name: "Node.js",
-          icon: <FaNodeJs className="w-4 h-4 text-[#339933]" />,
-        },
-        {
-          name: "Python",
-          icon: <FaPython className="w-4 h-4 text-[#3776AB]" />,
-        },
-        {
-          name: "MySQL",
-          icon: <SiMysql className="w-4 h-4 text-[#336791]" />,
-        },
-        {
-          name: "MongoDB",
-          icon: <SiMongodb className="w-4 h-4 text-[#47A248]" />,
-        },
-        {
-          name: "REST APIs",
-          icon: <BsGrid1X2 className="w-4 h-4 text-[#FF6C37]" />,
-        },
-        {
-          name: "Laravel",
-          icon: <SiLaravel className="w-4 h-4 text-[#e1002d]" />,
-        },
-        {
-          name: "Express",
-          icon: <SiExpress className="w-4 h-4 text-white" />,
-        },
+        { name: "Node.js", icon: <FaNodeJs style={{ color: "#339933" }} /> },
+        { name: "Python", icon: <FaPython style={{ color: "#3776AB" }} /> },
+        { name: "MongoDB", icon: <SiMongodb style={{ color: "#47A248" }} /> },
+        { name: "MySQL", icon: <SiMysql style={{ color: "#00758F" }} /> },
+        { name: "Express", icon: <SiExpress style={{ color: "#ccc" }} /> },
+        { name: "REST APIs", icon: <BsGrid1X2 style={{ color: "#FF6C37" }} /> },
       ],
     },
-    // {
-    //   icon: Layout,
-    //   title: "UI/UX Design",
-    //   color: "text-purple-400",
-    //   skills: [
-    //     { name: "Figma", icon: <FaFigma className="w-4 h-4 text-[#F24E1E]" /> },
-    //     {
-    //       name: "Responsive Design",
-    //       icon: <Layout className="w-4 h-4 text-[#38B2AC]" />,
-    //     },
-    //     {
-    //       name: "Wireframing",
-    //       icon: <BsGrid1X2 className="w-4 h-4 text-[#9CA3AF]" />,
-    //     },
-    //     {
-    //       name: "Prototyping",
-    //       icon: <MdAnimation className="w-4 h-4 text-[#F59E0B]" />,
-    //     },
-    //   ],
-    // },
-    // {
-    //   icon: Cloud,
-    //   title: "Cloud & DevOps",
-    //   color: "text-orange-400",
-    //   skills: [
-    //     { name: "AWS", icon: <FaAws className="w-4 h-4 text-[#FF9900]" /> },
-    //     {
-    //       name: "Docker",
-    //       icon: <FaDocker className="w-4 h-4 text-[#2496ED]" />,
-    //     },
-    //     { name: "CI/CD", icon: <FcWorkflow className="w-4 h-4" /> },
-    //     {
-    //       name: "Kubernetes",
-    //       icon: <BsGrid1X2 className="w-4 h-4 text-[#326CE5]" />,
-    //     },
-    //     { name: "Git", icon: <FaGitAlt className="w-4 h-4 text-[#F05032]" /> },
-    //     { name: "Linux", icon: <FaLinux className="w-4 h-4 text-[#FCC624]" /> },
-    //   ],
-    // },
+    {
+      icon: Cloud,
+      title: "Cloud & DevOps",
+      theme: {
+        accentRgb: "251,146,60",
+        label: "Infrastructure",
+      },
+      skills: [
+        { name: "AWS", icon: <FaAws style={{ color: "#FF9900" }} /> },
+        { name: "Docker", icon: <FaDocker style={{ color: "#2496ED" }} /> },
+        {
+          name: "Kubernetes",
+          icon: <BsGrid1X2 style={{ color: "#326CE5" }} />,
+        },
+        { name: "CI/CD", icon: <FcWorkflow /> },
+        { name: "Git", icon: <FaGitAlt style={{ color: "#F05032" }} /> },
+        { name: "Linux", icon: <FaLinux style={{ color: "#FCC624" }} /> },
+      ],
+    },
     {
       icon: Cpu,
-      title: "Tools & Technologies",
-      color: "text-pink-400",
+      title: "Tools & Tech",
+      theme: {
+        accentRgb: "232,121,249",
+        label: "Ecosystem",
+      },
       skills: [
         {
           name: "VS Code",
-          icon: <TbBrandVscode className="w-4 h-4 text-[#007ACC]" />,
+          icon: <TbBrandVscode style={{ color: "#007ACC" }} />,
         },
-        {
-          name: "Webpack",
-          icon: <SiWebpack className="w-4 h-4 text-[#8DD6F9]" />,
-        },
-        { name: "Redux", icon: <SiRedux className="w-4 h-4 text-[#764ABC]" /> },
-        {
-          name: "Firebase",
-          icon: <SiFirebase className="w-4 h-4 text-[#FFCA28]" />,
-        },
-        { name: "Vercel", icon: <SiVercel className="w-4 h-4 text-white" /> },
-        { name: "Vite", icon: <SiVite className="w-4 h-4 text-[#646CFF]" /> },
+        { name: "Webpack", icon: <SiWebpack style={{ color: "#8DD6F9" }} /> },
+        { name: "Redux", icon: <SiRedux style={{ color: "#764ABC" }} /> },
+        { name: "Firebase", icon: <SiFirebase style={{ color: "#FFCA28" }} /> },
+        { name: "Vercel", icon: <SiVercel style={{ color: "#fff" }} /> },
+        { name: "Vite", icon: <SiVite style={{ color: "#646CFF" }} /> },
       ],
     },
-    // {
-    //   icon: Paintbrush,
-    //   title: "Creative Skills",
-    //   color: "text-yellow-400",
-    //   skills: [
-    //     {
-    //       name: "UI Animation",
-    //       icon: <MdAnimation className="w-4 h-4 text-[#FF4081]" />,
-    //     },
-    //     {
-    //       name: "SVG Animation",
-    //       icon: <MdAnimation className="w-4 h-4 text-[#00C853]" />,
-    //     },
-    //     {
-    //       name: "3D Modeling",
-    //       icon: <Cpu className="w-4 h-4 text-[#7C4DFF]" />,
-    //     },
-    //     {
-    //       name: "Motion Graphics",
-    //       icon: <MdAnimation className="w-4 h-4 text-[#FF6D00]" />,
-    //     },
-    //   ],
-    // },
   ];
 
   return (
-    <main className="pt-15 lg:pt-0 text-white min-h-screen bg-[#04081A] relative">
-      {/* Grid Background */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
+    <>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossOrigin="anonymous"
+      />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet"
+      />
 
-      <section className="container mx-auto px-4 py-11 relative z-10">
-        <div className="flex justify-center items-center ">
-          <IconCloudDemo />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skillCategories.map((category, index) => (
-            <SkillCard
-              key={index}
-              icon={category.icon}
-              title={category.title}
-              skills={category.skills}
-              color={category.color}
-            />
-          ))}
-        </div>
-      </section>
-      <style jsx>{`
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
+      <style>{`
+        @keyframes fadeSlideUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
-        .animate-shimmer {
-          animation: shimmer 2s infinite;
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
         }
-        .bg-grid-pattern {
-          background-image: linear-gradient(
-              to right,
-              rgba(100, 100, 255, 0.1) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              to bottom,
-              rgba(100, 100, 255, 0.1) 1px,
-              transparent 1px
-            );
-          background-size: 30px 30px;
+        .skill-card {
+          animation: fadeSlideUp 0.55s ease both;
         }
+        .skill-badge {
+          animation: fadeSlideUp 0.4s ease both;
+        }
+        .globe-container {
+          animation: fadeIn 1s ease both;
+        }
+        .skills-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 32px; /* Increased gap slightly to give wider cards breathing room */
+          max-width: 1280px; /* Increased from 900px to stretch beautifully across the screen */
+          margin: 0 auto;
+        }
+       
+        @media (max-width: 1024px) {
+          .skills-grid { 
+            gap: 24px;
+            max-width: 900px; 
+          } 
+        }
+
+        @media (max-width: 700px) {
+          .skills-grid { grid-template-columns: 1fr; }
+        }
+
       `}</style>
-    </main>
+
+      <main
+        style={{
+          minHeight: "100vh",
+          background: "#04081A",
+          position: "relative",
+          overflow: "hidden",
+          padding: "60px 24px",
+        }}
+      >
+        {/* Background mesh */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+          `,
+            backgroundSize: "44px 44px",
+          }}
+        />
+
+        {/* Central Glow mapped to sit exactly behind the globe */}
+        <div
+          style={{
+            position: "absolute",
+            top: "25%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+            width: "700px",
+            height: "700px",
+            background:
+              "radial-gradient(ellipse, rgba(99,102,241,0.07) 0%, transparent 65%)",
+            pointerEvents: "none",
+          }}
+        />
+
+        <section style={{ position: "relative", zIndex: 10 }}>
+          {/* Skill Globe Container added here */}
+          <div
+            className="globe-container"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "40px",
+            }}
+          >
+            <IconCloudDemo />
+          </div>
+
+          <div className="skills-grid">
+            {skillCategories.map((cat, i) => (
+              <SkillCard key={i} index={i} {...cat} />
+            ))}
+          </div>
+        </section>
+      </main>
+    </>
   );
 };
 
